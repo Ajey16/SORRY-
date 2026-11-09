@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SORRY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#ffc94d; --amber:#ff9a1f; --orange:#ff6a00; --maroon:#2b0a08; --brown:#4a1408; --cream:#fff4e0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body {
+    min-height:100vh; color:var(--cream); overflow-x:hidden;
+    font-family:'Playfair Display',Georgia,'Times New Roman',serif;
+    background-color:var(--maroon);
+  }
+  /* background fixed layer: har phone par poori screen cover karta hai */
+  body::before {
+    content:""; position:fixed; inset:0; z-index:-1;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255,154,31,.28), transparent 50%),
+      radial-gradient(circle at 15% 80%, rgba(255,106,0,.18), transparent 45%),
+      radial-gradient(circle at 90% 60%, rgba(255,201,77,.14), transparent 45%),
+      linear-gradient(170deg, #1a0604, var(--maroon) 40%, var(--brown) 100%);
+  }
+
+  /* string lights */
+  .lights { position:fixed; top:0; left:0; right:0; height:46px; z-index:5; pointer-events:none; display:flex; justify-content:space-around; align-items:flex-start; }
+  .lights::before { content:""; position:absolute; top:6px; left:-5%; right:-5%; height:2px; background:#6b3a12; border-radius:50%; box-shadow:0 1px 0 rgba(0,0,0,.4); }
+  .bulb { position:relative; top:6px; width:10px; height:18px; border-radius:50% 50% 55% 55%; animation:twinkle 2.4s ease-in-out infinite; }
+  .bulb::before { content:""; position:absolute; top:-5px; left:2px; width:6px; height:6px; background:#6b3a12; border-radius:1px; }
+  @keyframes twinkle { 0%,100% { opacity:1; filter:brightness(1.2); } 50% { opacity:.45; filter:brightness(.8); } }
+
+  /* floating sparkles */
+  .sparks { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0; }
+  .sparks span { position:absolute; bottom:-30px; border-radius:50%; background:radial-gradient(circle,#fff6c4,var(--amber) 60%,transparent 70%); opacity:0; animation:floatUp linear infinite; }
+  @keyframes floatUp {
+    0%   { transform:translateY(0) translateX(0); opacity:0; }
+    10%  { opacity:.9; }
+    90%  { opacity:.3; }
+    100% { transform:translateY(-110vh) translateX(30px); opacity:0; }
+  }
+
+  header { position:relative; z-index:1; min-height:78vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:60px 16px 40px; }
+  header h1 {
+    font-size:clamp(3.4rem,17vw,9.5rem); font-weight:900; letter-spacing:.1em; line-height:1.05;
+    background:linear-gradient(180deg,#fff6c4 0%,var(--gold) 45%,var(--orange) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 0 24px rgba(255,154,31,.6));
+    animation:rise 1.6s ease both;
+  }
+  .divider { margin-top:26px; display:flex; align-items:center; gap:16px; animation:rise 2.2s ease both; }
+  .divider::before, .divider::after { content:""; width:70px; height:2px; background:linear-gradient(90deg,transparent,var(--gold)); }
+  .divider::after { transform:scaleX(-1); }
+  .down { margin-top:30px; font-size:1.8rem; color:var(--gold); animation:bounce 1.8s ease-in-out infinite; }
+  @keyframes rise { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+  @keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(10px); } }
+
+  /* diya (CSS only) */
+  .diya { position:relative; width:46px; height:40px; }
+  .diya::before { content:""; position:absolute; left:0; right:0; bottom:0; height:20px; background:linear-gradient(180deg,#d9561a,#7a2506); border-radius:0 0 46px 46px / 0 0 22px 22px; box-shadow:0 0 18px rgba(255,154,31,.5); }
+  .diya::after { content:""; position:absolute; left:6px; right:6px; bottom:16px; height:6px; background:#e8883a; border-radius:50%; }
+  .flame {
+    position:absolute; left:50%; bottom:20px; width:14px; height:26px; margin-left:-7px;
+    background:radial-gradient(ellipse at 50% 75%, #fffbe0 0%, #ffd23f 35%, var(--orange) 80%);
+    border-radius:50% 50% 50% 50% / 65% 65% 35% 35%;
+    transform-origin:50% 100%;
+    filter:drop-shadow(0 0 10px rgba(255,170,40,.95));
+    animation:flicker 1.4s ease-in-out infinite;
+  }
+  .diya:nth-child(2n) .flame { animation-duration:1.9s; animation-delay:.3s; }
+  .diya:nth-child(3n) .flame { animation-duration:1.6s; animation-delay:.6s; }
+  @keyframes flicker {
+    0%,100% { transform:scale(1,1) skewX(0); }
+    25% { transform:scale(.92,1.08) skewX(3deg); }
+    50% { transform:scale(1.05,.94) skewX(-3deg); }
+    75% { transform:scale(.95,1.06) skewX(2deg); }
+  }
+
+  .wrap { position:relative; z-index:1; max-width:660px; margin:0 auto; padding:0 16px 40px; }
+
+  .reveal { opacity:0; transform:translateY(36px); transition:opacity 1s ease, transform 1s ease; }
+  .reveal.show { opacity:1; transform:none; }
+
+  /* photo frame */
+  .paper {
+    position:relative; background:#fff; padding:12px; border-radius:8px;
+    box-shadow:0 0 0 3px var(--gold), 0 0 0 6px rgba(255,154,31,.35), 0 20px 60px rgba(0,0,0,.55), 0 0 60px rgba(255,154,31,.4);
+  }
+  .paper img { display:block; width:100%; height:auto; border-radius:4px; }
+  .missing { display:none; padding:70px 20px; text-align:center; color:#b5531c; font-size:1.1rem; }
+
+  /* video */
+  .video-section { margin-top:80px; }
+  .video-box {
+    position:relative; width:100%; aspect-ratio:16/9; border-radius:18px; overflow:hidden;
+    background:linear-gradient(135deg,#4a1408,#1a0604);
+    box-shadow:0 0 0 3px var(--gold), 0 0 0 6px rgba(255,154,31,.35), 0 20px 60px rgba(0,0,0,.55), 0 0 50px rgba(255,154,31,.35);
+  }
+  .video-box video { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#000; display:none; }
+  .placeholder { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:14px; color:var(--gold); font-size:1.15rem; letter-spacing:.05em; }
+  .play { width:78px; height:78px; border:3px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.9rem; padding-left:6px; color:var(--gold); animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { box-shadow:0 0 0 0 rgba(255,201,77,.5); } 50% { box-shadow:0 0 0 18px rgba(255,201,77,0); } }
+
+  /* diya row at bottom */
+  footer { position:relative; z-index:1; display:flex; justify-content:center; gap:26px; padding:30px 16px 70px; flex-wrap:wrap; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; transition:none !important; }
+    .reveal { opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lights" id="lights"></div>
+<div class="sparks" id="sparks"></div>
+
+<header>
+  <h1>SORRY</h1>
+  <div class="divider"><div class="diya"><i class="flame"></i></div></div>
+  <div class="down">&#8595;</div>
+</header>
+
+<div class="wrap">
+
+  <!-- Note ki photo: isi folder mein "note.jpg" naam se rakho -->
+  <div class="paper reveal" id="paper">
+    <img src="note.jpg" alt="Handwritten apology note"
+         onerror="this.style.display='none'; document.getElementById('missing').style.display='block';">
+    <div class="missing" id="missing">note.jpg yahan rakhni hai</div>
+  </div>
+
+  <!-- Video: isi folder mein "video.mp4" naam se rakho -->
+  <div class="video-section reveal" id="videoSection">
+    <div class="video-box">
+      <video id="vid" controls playsinline preload="metadata" src="video.mp4"></video>
+      <div class="placeholder" id="ph">
+        <div class="play">&#9654;</div>
+        <div>Video yahan aayega</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="diya"><i class="flame"></i></div>
+  <div class="diya"><i class="flame"></i></div>
+  <div class="diya"><i class="flame"></i></div>
+  <div class="diya"><i class="flame"></i></div>
+  <div class="diya"><i class="flame"></i></div>
+</footer>
+
+<script>
+  // video mile to dikhao
+  const vid = document.getElementById('vid');
+  vid.addEventListener('loadedmetadata', () => {
+    vid.style.display = 'block';
+    document.getElementById('ph').style.display = 'none';
+  });
+
+  // scroll par dheere se aana
+  const io = new IntersectionObserver((es, o) => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('show'); o.unobserve(e.target); }
+  }), {threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // string lights
+  const colors = ['#ffc94d','#ff6a00','#ff4d8d','#ffe27a','#ff9a1f'];
+  const lights = document.getElementById('lights');
+  for (let i = 0; i < 16; i++) {
+    const b = document.createElement('span');
+    b.className = 'bulb';
+    const c = colors[i % colors.length];
+    b.style.background = c;
+    b.style.boxShadow = '0 0 12px 3px ' + c;
+    b.style.animationDelay = (i * 0.25) + 's';
+    lights.appendChild(b);
+  }
+
+  // floating sparkles
+  const sparks = document.getElementById('sparks');
+  for (let i = 0; i < 28; i++) {
+    const s = document.createElement('span');
+    const size = 3 + Math.random() * 7;
+    s.style.width = s.style.height = size + 'px';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.animationDuration = (8 + Math.random() * 10) + 's';
+    s.style.animationDelay = (Math.random() * 12) + 's';
+    sparks.appendChild(s);
+  }
+</script>
+</body>
+</html>
